@@ -19,7 +19,6 @@ public class BoardListService implements IBoardService {
 		BoardDAO dao = BoardDAO.getInstance();
 		List<BoardVO> boardList = dao.getBoardList();
 		request.setAttribute("boardList", boardList);
-		
 	}
 
 }

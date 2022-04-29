@@ -51,10 +51,8 @@ public class BoardController extends HttpServlet {
 		IBoardService sv = null;
 		
 		if (uri.equals("/MyFirstWeb/boardList.do")) {
-			// 서비스 생성
-			sv = new BoardListService();
-			// 서비스의 .execute(request, response) 호출
-			sv.execute(request, response);
+			sv = new BoardListService(); // 서비스 생성
+			sv.execute(request, response); // 서비스의 .execute(request, response) 호출
 			ui = "/board/getBoardList.jsp";
 		} else if (uri.equals("/MyFirstWeb/boardDetail.do")) {
 			sv = new BoardDetailService();

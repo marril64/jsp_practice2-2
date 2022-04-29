@@ -17,7 +17,6 @@ public class BoardDetailService implements IBoardService {
 		int num = Integer.parseInt(request.getParameter("board_num"));
 		BoardVO board = dao.getBoardDetail(num);
 		request.setAttribute("board", board);
-		
 	}
 
 }
