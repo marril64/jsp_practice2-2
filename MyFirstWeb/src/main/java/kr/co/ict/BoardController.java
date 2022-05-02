@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ict.domain.*;
+import kr.co.ict.service.BoardDeleteService;
 import kr.co.ict.service.BoardDetailService;
+import kr.co.ict.service.BoardInsertService;
 import kr.co.ict.service.BoardListService;
+import kr.co.ict.service.BoardUpdateFormService;
+import kr.co.ict.service.BoardUpdateService;
 import kr.co.ict.service.IBoardService;
 
 /**
@@ -58,32 +62,27 @@ public class BoardController extends HttpServlet {
 			sv = new BoardDetailService();
 			sv.execute(request, response);
 			ui = "/board/boardDetail.jsp";
-		} else if (uri.equals("/MyFirstWeb/boardInsertForm.do")) {			
+		} else if (uri.equals("/MyFirstWeb/boardInsertForm.do")) {
+			// 글쓰기 창으로 넘어가는 로직
+			// 로직이 없어서 ui 로 연결해주는것만으로도 충분함
 			ui = "/board/boardInsertForm.jsp";
 		} else if (uri.equals("/MyFirstWeb/boardInsert.do")) {
-			String writer = request.getParameter("writer");
-			String title = request.getParameter("title");
-			String content = request.getParameter("content");
-			dao.boardInsert(writer, title, content);
-			// List<BoardVO> boardList = dao.getBoardList();
-			// request.setAttribute("boardList", boardList);
-			ui = "/boardList.do"; // 리다이렉트시는 폴더명 없이 마지막 주소만 적습니다.
+			sv = new BoardInsertService();
+			sv.execute(request, response);
+			ui = "/boardList.do";
 		} else if (uri.equals("/MyFirstWeb/boardDelete.do")) {
-			int num = Integer.parseInt(request.getParameter("num"));
-			dao.boardDelete(num);
+			sv = new BoardDeleteService();
+			sv.execute(request, response);
 			ui = "/boardList.do";
 		} else if (uri.equals("/MyFirstWeb/boardUpdateForm.do")) {
-			int board_num = Integer.parseInt(request.getParameter("board_num"));
-			BoardVO board = dao.getBoardDetail(board_num);
-			request.setAttribute("board", board);
+			sv = new BoardUpdateFormService();
+			sv.execute(request, response);
 			ui = "board/boardUpdateForm.jsp";
 		} else if (uri.equals("/MyFirstWeb/boardUpdate.do")) {
-			String writer = request.getParameter("writer");
-			String title = request.getParameter("title");
-			String content = request.getParameter("content");
-			int num = Integer.parseInt(request.getParameter("num"));
-			dao.boardUpdate(writer, title, content, num);
-			ui = "/boardDetail.do?board_num=" + num;
+			sv = new BoardUpdateService();
+			sv.execute(request, response);
+			// ui = "/boardDetail.do?board_num=" + request.getAttribute("num");
+			ui = "/boardDetail.do?board_num=" + request.getParameter("num");
 		}
 		
 		RequestDispatcher dp = request.getRequestDispatcher(ui);
