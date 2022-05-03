@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,17 +42,20 @@
 	마지막 수정날짜 : ${board.mDate}<br/>
 	
 	<!-- 삭제번호를 서블릿 boardDelete로 보내야함 -->
-	<form action="/MyFirstWeb/boardDelete.do" method="post">
-		<input type="hidden" name="num" value="${board.boardNum}">
-		<input type="submit" value="삭제">
-		<a href="/MyFirstWeb/boardList.do"><input type="button" value="돌아가기"></a><!-- 가로로 나열하고 싶으면 css에서 display로 나열할 수 있다. -->
-		<!-- <a href="/MyFirstWeb/boardList"><button>돌아가기</button></a> 폼 안에 이렇게 작성 시 삭제 로그로 돌아가게 된다.  -->
-		<!-- <a href="/MyFirstWeb/boardUpdateForm"><input type="button" value="수정하기"></a> -->
-	</form>
-	<form action="http://localhost:8181/MyFirstWeb/boardUpdateForm.do" method="post">
-		<input type="hidden" name="board_num" value="${board.boardNum}">
-		<input type="submit" value="수정">
-	</form>
+	<c:if test="${sessionScope.s_id eq board.writer}">
+		<form action="/MyFirstWeb/boardDelete.do" method="post">
+			<input type="hidden" name="num" value="${board.boardNum}">
+			<input type="hidden" name="board_writer" value="${board.writer}"><!-- 글쓴이를 전달하도록 구성 -->
+			<input type="submit" value="삭제">
+			<!-- <a href="/MyFirstWeb/boardList"><button>돌아가기</button></a> 폼 안에 이렇게 작성 시 삭제 로그로 돌아가게 된다.  -->
+			<!-- <a href="/MyFirstWeb/boardUpdateForm"><input type="button" value="수정하기"></a> -->
+		</form>
+		<form action="http://localhost:8181/MyFirstWeb/boardUpdateForm.do" method="post">
+			<input type="hidden" name="board_num" value="${board.boardNum}">
+			<input type="submit" value="수정">
+		</form>
+	</c:if>
+	<a href="/MyFirstWeb/boardList.do"><input type="button" value="돌아가기"></a><!-- 가로로 나열하고 싶으면 css에서 display로 나열할 수 있다. -->
 </body>
 </html>
 
