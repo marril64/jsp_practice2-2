@@ -38,7 +38,7 @@ public class BoardDAO {
 	// 게시판의 전체 글을 가져오는 getBoardList() 메서드를 작성해주세요.
 	// 전체 글을 가져오므로 List<BoardVO> 를 리턴하면 됩니다.
 	// 작성시 UserDAO의 getAllUserList()메서드를 참조해주세요.
-	public List<BoardVO> getBoardList() { // 모든 자료를 넘겨받으므로 파라미터가 필요없음
+	public List<BoardVO> getBoardList(int pageNum) { // 모든 자료를 넘겨받으므로 파라미터가 필요없음 -> 바뀜
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -46,8 +46,9 @@ public class BoardDAO {
 		
 		try {
 			con = ds.getConnection();
-			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC";
+			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC limit ((?-1)*10), 10";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pageNum);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -85,7 +86,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		BoardVO board = new BoardVO();
-		
+		// upHit(bno); // getBoardDetail 내부에서 호출하도록 해도 조회수는 올라감 (단점 : 수정버튼을 눌러도 조회수가 올라간다.)
 		try {
 			con = ds.getConnection();
 			String sql = "SELECT * FROM boardTbl WHERE board_num = ?";
@@ -198,5 +199,29 @@ public class BoardDAO {
 			}
 		}
 	} // boardUpdate(str, str, str) 끝나는 지점.
+	
+	public void upHit(int boardNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			String sql = "UPDATE boardTbl SET hit = hit + 1 WHERE board_num = ?";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNum);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // upHit(int) 끝나는 지점.
 	
 }

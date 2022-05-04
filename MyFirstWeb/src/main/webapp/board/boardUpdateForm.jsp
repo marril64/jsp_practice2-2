@@ -4,6 +4,9 @@
 <c:if test="${sessionScope.s_id eq null}">
 	<% response.sendRedirect("http://localhost:8181/MyFirstWeb/"); %>
 </c:if>
+<c:if test="${sessionScope.s_id ne board.writer}">
+	<% response.sendRedirect("http://localhost:8181/MyFirstWeb/"); %>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
