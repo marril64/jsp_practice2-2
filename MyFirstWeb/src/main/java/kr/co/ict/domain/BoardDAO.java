@@ -46,9 +46,10 @@ public class BoardDAO {
 		
 		try {
 			con = ds.getConnection();
-			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC limit ((?-1)*10), 10";
+			int num = (pageNum - 1) * 10; // sql 구문 안에서 계산하는 식이 아닌 밖에서 계산한 수를 구문안에 넣어준다.
+			String sql = "SELECT * FROM boardTbl ORDER BY board_num DESC limit ?, 10";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, pageNum);
+			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -223,5 +224,31 @@ public class BoardDAO {
 			}
 		}
 	} // upHit(int) 끝나는 지점.
+	
+	public int getAllBoardCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int num = 0;
+		
+		try {
+			con = ds.getConnection();
+			String sql = "SELECT COUNT(*) FROM boardTbl";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			num = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+				pstmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return num;
+	} // getAllBoardCount() 끝나는 지점.
 	
 }
