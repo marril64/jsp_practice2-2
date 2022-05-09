@@ -48,7 +48,7 @@ public class BoardButtonDTO {
 				navNum = this.currentPage / 10;
 			}*/
 			
-			navNum = ((this.currentPage - 1) / 10) + 1; // 간소화 코드
+			navNum = (((this.currentPage - 1) / 10) * 10) + 1; // 간소화 코드
 			
 			// 시작페이지 구하기 완료
 			this.startPage = navNum;
@@ -64,7 +64,7 @@ public class BoardButtonDTO {
 	} // 생성자 종료(글개수, 총페이지개수, 시작페이지, 끝페이지, 현재조회페이지 완료)
 	
 	// getter가 있어야 ${dto.endPage} 같은 el형식으로 데이터를 얻을 수 있으므로
-	// getter랑 toString을 만들어주세요.
+	// getter랑 toString을 만들어주세요. // bootswatch사이트 참고하쟈!
 
 	public int getBoardCount() {
 		return boardCount;

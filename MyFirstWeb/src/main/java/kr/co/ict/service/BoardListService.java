@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.co.ict.domain.BoardButtonDTO;
 import kr.co.ict.domain.BoardDAO;
 import kr.co.ict.domain.BoardVO;
 
@@ -52,6 +53,13 @@ public class BoardListService implements IBoardService {
 		
 		// DAO는 다시 생성해줘야합니다.
 		BoardDAO dao = BoardDAO.getInstance();
+		
+		int boardCount = dao.getAllBoardCount(); // 글 갯수를 얻어오기
+		BoardButtonDTO buttons = new BoardButtonDTO(boardCount, pageNum);// 밑에 깔아줘야 하는 버튼에 대한 정보 추가
+		
+		// 바인딩해서 넘겨주신 다음, 결과페이지에서 수치정보도 확인해주세요.
+		request.setAttribute("buttons", buttons);
+		
 		List<BoardVO> boardList = dao.getBoardList(pageNum);
 		request.setAttribute("boardList", boardList);
 	}
