@@ -19,79 +19,82 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>게시판이랍니당</h1>
-	<table border="1" class="table table-hover">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>생성시간</th>
-				<th>수정시간</th>
-				<th>조회수</th>
-			</tr>
-		</thead>
-		<!-- JSTL c:forEach와 ${boardList}를 활용하면 됩니다.
-		전체 글 정보를 테이블 형식으로 보여주세요. getAllBoardList.jsp 참고해주세요. -->
-		<tbody>
-			<c:forEach var="board" items="${boardList}">
+	<div class="container">
+		<h1 >게시판이랍니당</h1>
+		<hr/>
+		<table class="table table-hover">
+			<thead>
 				<tr>
-					<td>${board.boardNum}</td>
-					<td><a href="http://localhost:8181/MyFirstWeb/boardDetail.do?board_num=${board.boardNum}">${board.title}</a></td>
-					<td>${board.writer}</td>
-					<td>${board.bDate}</td>
-					<td>${board.mDate}</td>
-					<td>${board.hit}</td>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>생성시간</th>
+					<th>수정시간</th>
+					<th>조회수</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<!-- ${buttons}<br/> -->
-	<!-- 이번 10개 페이지 조회버튼을 출력합니다.
-	현재 조회중인 페이지가 1~10페이지가 아닐때만, 첫페이지 -1 을 목표주소로 해서 prev버튼을 만들면 됩니다. -->
-	<!-- <c:if test="${buttons.startPage ne 1}">
-		<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.startPage - 1}">[prev]</a>
-	</c:if> -->
-	
-	<!-- foreach문의 begin, end속성을 이용해 숫자를 알맞게 깔아주세요. -->
-	<!-- <c:forEach var="pageNum" begin="${buttons.startPage}" end="${buttons.endPage}">
-		<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${pageNum}">[${pageNum}]</a>
-	</c:forEach> -->
-	
-	<!-- 이후 페이지 조회버튼을 출력합니다.
-	현재 조회중인 페이지그룹과 전체 글의 마지막 페이지의 관계에 대해서 생각해보시면 됩니다. -->
-	<!-- <c:if test="${buttons.endPage ne buttons.totalPages}">
-		<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.endPage + 1}">[next]</a>
-	</c:if> -->
-	<!-- <br/>
-	
-	<c:if test="${sessionScope.s_id ne null}">
-		<a href="http://localhost:8181/MyFirstWeb/boardInsertForm.do"><button>새로 글 작성하기</button></a>
-	</c:if> -->
-	<nav aria-label="Page navigation example">
-	  <ul class="pagination">
-	    <li class="page-item">
-	    <c:if test="${buttons.startPage ne 1}">
-	      <a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.startPage - 1}" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
-	    </c:if>
-	    </li>
-	    <c:forEach var="pageNum" begin="${buttons.startPage}" end="${buttons.endPage}">
-	    <li class="page-item"><a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${pageNum}">${pageNum}</a></li>
-	    </c:forEach>
-	    <li class="page-item">
-	    <c:if test="${buttons.endPage ne buttons.totalPages}">
-	      <a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.endPage + 1}" aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </c:if>
-	    </li>
-	  </ul>
-	</nav>
-	</br>
-	<c:if test="${sessionScope.s_id ne null}">
-		<a href="http://localhost:8181/MyFirstWeb/boardInsertForm.do"><button class="btn btn-primary">새로 글 작성하기</button></a>
-	</c:if>
+			</thead>
+			<!-- JSTL c:forEach와 ${boardList}를 활용하면 됩니다.
+			전체 글 정보를 테이블 형식으로 보여주세요. getAllBoardList.jsp 참고해주세요. -->
+			<tbody>
+				<c:forEach var="board" items="${boardList}">
+					<tr>
+						<td>${board.boardNum}</td>
+						<td><a href="http://localhost:8181/MyFirstWeb/boardDetail.do?board_num=${board.boardNum}">${board.title}</a></td>
+						<td>${board.writer}</td>
+						<td>${board.bDate}</td>
+						<td>${board.mDate}</td>
+						<td>${board.hit}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<!-- ${buttons}<br/> -->
+		<!-- 이번 10개 페이지 조회버튼을 출력합니다.
+		현재 조회중인 페이지가 1~10페이지가 아닐때만, 첫페이지 -1 을 목표주소로 해서 prev버튼을 만들면 됩니다. -->
+		<!-- <c:if test="${buttons.startPage ne 1}">
+			<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.startPage - 1}">[prev]</a>
+		</c:if> -->
+		
+		<!-- foreach문의 begin, end속성을 이용해 숫자를 알맞게 깔아주세요. -->
+		<!-- <c:forEach var="pageNum" begin="${buttons.startPage}" end="${buttons.endPage}">
+			<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${pageNum}">[${pageNum}]</a>
+		</c:forEach> -->
+		
+		<!-- 이후 페이지 조회버튼을 출력합니다.
+		현재 조회중인 페이지그룹과 전체 글의 마지막 페이지의 관계에 대해서 생각해보시면 됩니다. -->
+		<!-- <c:if test="${buttons.endPage ne buttons.totalPages}">
+			<a href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.endPage + 1}">[next]</a>
+		</c:if> -->
+		<!-- <br/>
+		
+		<c:if test="${sessionScope.s_id ne null}">
+			<a href="http://localhost:8181/MyFirstWeb/boardInsertForm.do"><button>새로 글 작성하기</button></a>
+		</c:if> -->
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		  	<c:if test="${buttons.startPage ne 1}">
+		    	<li class="page-item">
+			      <a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.startPage - 1}" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+		    	</li>
+		    </c:if>
+		    <c:forEach var="pageNum" begin="${buttons.startPage}" end="${buttons.endPage}">
+		    	<li class="page-item ${buttons.currentPage eq pageNum ? 'active' : ''}"><a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${pageNum}">${pageNum}</a></li>
+		    </c:forEach>
+		    <c:if test="${buttons.endPage ne buttons.totalPages}">
+		    	<li class="page-item">
+			      <a class="page-link" href="http://localhost:8181/MyFirstWeb/boardList.do?pageNum=${buttons.endPage + 1}" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+		    	</li>
+		    </c:if>
+		  </ul>
+		</nav>
+		</hr>
+		<c:if test="${sessionScope.s_id ne null}">
+			<a href="http://localhost:8181/MyFirstWeb/boardInsertForm.do"><button class="btn btn-primary">새로 글 작성하기</button></a>
+		</c:if>
+	</div><!-- div.contailner -->
 </body>
 </html>
